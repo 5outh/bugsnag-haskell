@@ -1,0 +1,22 @@
+name:                bugsnag-haskell
+version:             0.1.0.0
+synopsis:            Simple project template from stack
+description:         Please see README.md
+homepage:            https://github.com/5outh/bugsnag-haskell#readme
+license:             BSD3
+author:              Benjamin Kovach
+maintainer:          benjamin@kovach.me
+copyright:           MIT
+category:            Web
+
+dependencies:
+  - base >= 4.7 && < 5
+  - http-dispatch
+  - aeson
+  - text
+  - bytestring
+
+executables:
+  bugsnag-haskell:
+    source-dirs:      src
+    main:             Main.hs
