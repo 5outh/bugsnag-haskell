@@ -1,6 +1,0 @@
-Configuring cookie-0.4.2...
-setup-Simple-Cabal-1.22.5.0-ghc-7.10.3: The following installed packages are
-broken because other packages they depend on are missing. These broken
-packages must be rebuilt before they can be used.
-package data-default-class-0.0.1 is broken due to missing package
-base-4.8.2.0-cc43d8e06aa74e9c4c0132becc49ee25
