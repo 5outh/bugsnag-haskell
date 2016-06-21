@@ -16,6 +16,21 @@ license-file:   LICENSE
 build-type:     Simple
 cabal-version:  >= 1.10
 
+library
+  hs-source-dirs:
+      lib
+  build-depends:
+      base >= 4.7 && < 5
+    , http-dispatch
+    , aeson
+    , text
+    , bytestring
+  exposed-modules:
+      Network.Bugsnag.Types
+  other-modules:
+      Paths_bugsnag_haskell
+  default-language: Haskell2010
+
 executable bugsnag-haskell
   main-is: Main.hs
   hs-source-dirs:
@@ -26,4 +41,5 @@ executable bugsnag-haskell
     , aeson
     , text
     , bytestring
+    , bugsnag-haskell
   default-language: Haskell2010

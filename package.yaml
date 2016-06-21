@@ -16,7 +16,13 @@ dependencies:
   - text
   - bytestring
 
+library:
+  source-dirs: lib
+  exposed-modules:
+    - Network.Bugsnag.Types 
+
 executables:
   bugsnag-haskell:
     source-dirs:      src
     main:             Main.hs
+    dependencies: bugsnag-haskell
