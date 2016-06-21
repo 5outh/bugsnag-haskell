@@ -29,18 +29,19 @@ data BugsnagEvent = BugsnagEvent
   } deriving (Show, Eq, Generic)
 
 
+-- TODO: Finish testing
 instance ToJSON BugsnagEvent where
   toJSON BugsnagEvent{..} = object
     [ "payloadVersion" .= text "2"
     , "exceptions" .= toJSON exceptions
-    -- , "threads" .= toJSON threads
-    -- , "context" .= toJSON context
-    -- , "groupingHash" .= toJSON groupingHash 
-    -- , "severity" .= toJSON severity 
-    -- , "user" .= toJSON user 
-    -- , "app" .= toJSON app 
-    -- , "device" .= toJSON device 
-    -- , "metaData" .= toJSON metaData 
+    , "threads" .= toJSON threads
+    , "context" .= toJSON context
+    , "groupingHash" .= toJSON groupingHash 
+    , "severity" .= toJSON severity 
+    , "user" .= toJSON user 
+    , "app" .= toJSON app 
+    , "device" .= toJSON device 
+    , "metaData" .= toJSON metaData 
     ]
 
 testEvent :: BugsnagEvent
@@ -56,10 +57,23 @@ testEvent = BugsnagEvent
   Nothing
 
 data BugsnagThread = BugsnagThread
-  deriving (Show, Eq, Generic)
+  { threadId :: Text
+  , threadName :: Text
+  , threadStackTrace :: [BugsnagStackFrame]
+  } deriving (Show, Eq, Generic)
+
+instance ToJSON BugsnagThread where
+  toJSON BugsnagThread{..} = object
+    [ "id" .= threadId
+    , "name" .= threadName
+    , "stacktrace" .= toJSON threadStackTrace
+    ]
 
 testThread :: BugsnagThread
 testThread = BugsnagThread
+  "2"
+  "Main"
+  []
 
 data BugsnagStackFrame = BugsnagStackFrame
   { file :: Text
@@ -108,7 +122,6 @@ data BugsnagDevice = BugsnagDevice
 testDevice :: BugsnagDevice
 testDevice = BugsnagDevice (Just "1.0") (Just "web.io.com")
 
-instance ToJSON BugsnagThread
 instance ToJSON BugsnagException
 instance ToJSON BugsnagUser
 instance ToJSON BugsnagApp
