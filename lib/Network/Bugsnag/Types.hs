@@ -1,6 +1,7 @@
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE RecordWildCards #-}
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE GADTs #-}
 
 module Network.Bugsnag.Types where
 
@@ -106,4 +107,11 @@ instance ToJSON BugsnagRequest where
         ]
       , "events" .= toJSON events
       ]
+
+class BugsnagError e where
+  errorRow :: e -> Int
+  errorColumn :: e -> Maybe Int
+  errorName :: e -> Text
+  errorMessage ::  e -> Maybe Text
+  errorFile :: e -> Maybe Text
 

@@ -1,7 +1,12 @@
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE StandaloneDeriving #-}
+{-# LANGUAGE ScopedTypeVariables #-}
 
 module Main where
 
+import Control.Exception
+import Network.Bugsnag.TH
 import Network.Bugsnag.Types
 import System.Environment
 import Network.HTTP.Dispatch.Core
@@ -10,6 +15,7 @@ import Data.ByteString.Lazy as BL
 import Data.Text
 import qualified Data.Text as T
 import Data.Aeson
+import Language.Haskell.TH.Syntax
 
 appKey :: IO Text
 appKey = T.pack <$> getEnv "BUGSNAG_APP_KEY"
@@ -56,8 +62,31 @@ myHttpReq key = HTTPRequest
   [header "Content-Type" "application/json"]
   (Just (BL.toStrict (encode $ testRequest key)))
 
+data MyException = MyException
+  { exRow :: !Int
+  , exColumn :: !Int
+  , exName :: !Text
+  , exMessage :: !Text
+  , exFile :: !Text
+  }
+
+instance BugsnagError MyException where
+  errorRow = exRow
+  errorColumn = Just . exColumn
+  errorName = exName
+  errorMessage = Just . exMessage
+  errorFile = Just . exFile
+
+deriving instance Show MyException
+
+instance Exception MyException
+
 main :: IO ()
 main = do
+  -- ??? How to get location to show up in proper position
+  undefined `catch` \(e :: SomeException) -> do
+    print $(qLocation >>= liftLoc)
   key <- appKey
   runRequest (myHttpReq key)
   return ()
+

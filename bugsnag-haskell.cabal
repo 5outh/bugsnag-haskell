@@ -25,9 +25,11 @@ library
     , aeson
     , text
     , bytestring
+    , template-haskell
   exposed-modules:
       Network.Bugsnag.Types
   other-modules:
+      Network.Bugsnag.TH
       Paths_bugsnag_haskell
   default-language: Haskell2010
 
@@ -41,5 +43,6 @@ executable bugsnag-haskell
     , aeson
     , text
     , bytestring
+    , template-haskell
     , bugsnag-haskell
   default-language: Haskell2010

@@ -15,6 +15,7 @@ dependencies:
   - aeson
   - text
   - bytestring
+  - template-haskell
 
 library:
   source-dirs: lib
